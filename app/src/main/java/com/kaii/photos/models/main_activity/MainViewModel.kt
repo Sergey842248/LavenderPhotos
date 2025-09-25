@@ -141,7 +141,8 @@ class MainViewModel(context: Context, var albumInfo: List<AlbumInfo>) : ViewMode
                 )
             } else {
                 listOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.MANAGE_EXTERNAL_STORAGE
                 )
             }
 

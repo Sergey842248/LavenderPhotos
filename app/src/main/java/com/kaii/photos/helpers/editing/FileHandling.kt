@@ -650,7 +650,7 @@ suspend fun saveImage(
     )
 
     val newUri =
-        if (!overwrite && !isFromOpenWithView) {
+        if (!overwrite) {
             context.contentResolver.insertMedia(
                 context = context,
                 media = media,

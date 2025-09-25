@@ -1003,19 +1003,10 @@ private fun BottomBar(
                                 put(MediaColumns.MIME_TYPE, mimeType)
                             }
 
-                            val contentUri = context.contentResolver.insert(
-                                if (mediaType == MediaType.Image) MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                else MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                                contentValues
-                            )
+                            val contentUri = uri
 
-                            contentUri?.let {
+                            contentUri.let {
                                 context.contentResolver.getMediaStoreDataFromUri(contentUri)?.absolutePath?.let { absolutePath ->
-                                    context.contentResolver.copyUriToUri(
-                                        from = uri,
-                                        to = contentUri
-                                    )
-
                                     setBarVisibility(
                                         visible = true,
                                         window = window

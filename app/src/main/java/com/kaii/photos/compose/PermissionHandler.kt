@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -299,6 +300,37 @@ fun PermissionHandler(
                                     )
 
                                     appDetailsLauncher.launch(intent)
+                                }
+                            }
+                        }
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        item {
+                            val manageExternalStorageLauncher = rememberLauncherForActivityResult(
+                                contract = ActivityResultContracts.StartActivityForResult()
+                            ) { _ ->
+                                val granted = Environment.isExternalStorageManager()
+
+                                mainViewModel.onPermissionResult(
+                                    permission = Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                                    isGranted = granted
+                                )
+                            }
+
+                            PermissionButton(
+                                name = "Manage External Storage",
+                                description = "Allow Lavender Photos to manage files on the device",
+                                position = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) RowPosition.Middle else RowPosition.Bottom,
+                                granted = !mainViewModel.permissionQueue.contains(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+                            ) {
+                                val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                                manageExternalStorageLauncher.launch(intent)
+
+                                whyButtonExplanation = "This permission is needed to manage files on the device. Lavender Photos is very strict with what files it reads, and never shares or exploits this info."
+
+                                onGrantPermissionClicked = {
+                                    manageExternalStorageLauncher.launch(intent)
                                 }
                             }
                         }
