@@ -168,7 +168,6 @@ fun ConfirmationDialogWithBody(
     dialogBody: String,
     confirmButtonLabel: String,
     showCancelButton: Boolean = true,
-    onCancel: () -> Unit = {},
     action: () -> Unit
 ) {
     val localConfig = LocalConfiguration.current
@@ -218,7 +217,6 @@ fun ConfirmationDialogWithBody(
                 if (showCancelButton) {
                     Button(
                         onClick = {
-                            onCancel()
                             showDialog.value = false
                         },
                         colors = ButtonDefaults.buttonColors(

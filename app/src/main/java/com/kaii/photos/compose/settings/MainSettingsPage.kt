@@ -1,5 +1,6 @@
 package com.kaii.photos.compose.settings
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.WindowInsets
@@ -16,8 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.TextUnit
@@ -56,7 +63,7 @@ fun MainSettingsPage() {
                     showBackground = false,
                     titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
                     modifier = Modifier
-                        .padding(0.dp, 6.dp)
+                    	.padding(0.dp, 6.dp)
                 ) {
                     navController.navigate(MultiScreenViewType.SettingsGeneralView.name)
                 }
@@ -71,7 +78,7 @@ fun MainSettingsPage() {
                     showBackground = false,
                     titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
                     modifier = Modifier
-                        .padding(0.dp, 6.dp)
+                    	.padding(0.dp, 6.dp)
                 ) {
                     navController.navigate(MultiScreenViewType.PrivacyAndSecurity.name)
                 }
@@ -86,24 +93,9 @@ fun MainSettingsPage() {
                     showBackground = false,
                     titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
                     modifier = Modifier
-                        .padding(0.dp, 6.dp)
+                    	.padding(0.dp, 6.dp)
                 ) {
                     navController.navigate(MultiScreenViewType.SettingsLookAndFeelView.name)
-                }
-            }
-
-            item {
-                PreferencesRow(
-                    title = stringResource(id = R.string.settings_behaviour),
-                    summary = stringResource(id = R.string.settings_behaviour_desc),
-                    iconResID = R.drawable.graph,
-                    position = RowPosition.Middle,
-                    showBackground = false,
-                    titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
-                    modifier = Modifier
-                        .padding(0.dp, 6.dp)
-                ) {
-                    navController.navigate(MultiScreenViewType.SettingsBehaviourView.name)
                 }
             }
 
@@ -116,7 +108,7 @@ fun MainSettingsPage() {
                     showBackground = false,
                     titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
                     modifier = Modifier
-                        .padding(0.dp, 6.dp)
+                    	.padding(0.dp, 6.dp)
                 ) {
                     navController.navigate(MultiScreenViewType.SettingsMemoryAndStorageView.name)
                 }
@@ -131,7 +123,7 @@ fun MainSettingsPage() {
                     showBackground = false,
                     titleTextSize = TextStylingConstants.EXTRA_LARGE_TEXT_SIZE,
                     modifier = Modifier
-                        .padding(0.dp, 6.dp)
+                    	.padding(0.dp, 6.dp)
                 ) {
                     navController.navigate(MultiScreenViewType.SettingsDebuggingView.name)
                 }
@@ -144,6 +136,13 @@ fun MainSettingsPage() {
 @Composable
 private fun MainSettingsTopBar() {
     val navController = LocalNavController.current
+
+    val localConfig = LocalConfiguration.current
+    var isLandscape by remember { mutableStateOf(localConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) }
+
+    LaunchedEffect(localConfig) {
+        isLandscape = localConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+    }
 
     TopAppBar(
         title = {

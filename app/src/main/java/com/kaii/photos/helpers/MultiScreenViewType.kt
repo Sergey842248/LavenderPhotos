@@ -14,7 +14,6 @@ enum class MultiScreenViewType {
     SettingsGeneralView,
     SettingsMemoryAndStorageView,
     SettingsLookAndFeelView,
-    SettingsBehaviourView,
     OpenWithView,
     UpdatesPage,
     DataAndBackup,

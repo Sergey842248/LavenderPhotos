@@ -236,7 +236,6 @@ fun ImageEditor(
                 modifications = imageEditingState.modificationList,
                 lastSavedModCount = lastSavedModCount,
                 overwrite = overwrite,
-                isFromOpenWithView = isFromOpenWithView,
                 setOverwrite = {
                     overwrite = it
                 },

@@ -3,38 +3,6 @@
     <string name="app_name">Photos</string>
     <string name="changelog"><![CDATA[
     <p>
-    <h2>v1.1.0!:</h2>
-    <b><h4>- Added Features:</h4></b>
-    <p>
-        <br>- Added simplified chinese translation
-        <br>- Ability to blacklist albums when using "show all in main"
-        <br>- Pin albums even when "auto detect albums" is enabled
-        <br>- Toggle to immediately exit app on start page and not in photo view
-        <br>- Show loading snackbars in OpenWithView
-    </p>
-    <br>
-    <br>
-    <b><h4>- Improvements:</h4></b>
-    <p>
-        <br>- Ask for directory permission before editing file
-        <br>- Increase default video editor export bitrate
-        <br>- Make main navigation bar side-scrollable
-        <br>- New app icon
-        <br>- Albums in AlbumGridView now require long press to drag
-    </p>
-    <br>
-    <br>
-    <b><h4>- Fixed Bugs:</h4></b>
-    <p>
-        <br>- Inability to clear Immich server address if not logged in
-        <br>- Show everything in main shows everything everywhere
-        <br>- Update page\'s formatting being broken
-        <br>- Crash when deleting all media in an album
-        <br>- Crash when editing media from OpenWithView
-        <br>- Saving videos in non-standard directories would cause an infinite hang
-    </p>
-    <br>
-    <br>
     <h2>v1.0.0!:</h2>
     <br>
     <b><h4>- New Look!</h4></b>
@@ -508,7 +476,6 @@
 
     <!-- Navigation -->
     <string name="return_to_previous_page">Return to previous page</string>
-    <string name="navigation">Navigation</string>
 
     <!-- App -->
     <string name="app_icon">App Icon</string>
@@ -668,8 +635,6 @@
     <string name="editing_upload_image_failed">Couldn\'t pick image</string>
     <string name="editing_bitrate">Bitrate</string>
     <string name="editing_bitrate_unit">Bits per second</string>
-    <string name="editing_open_with_copying_video">Processing video…</string>
-    <string name="editing_open_with_copying_image">Processing image…</string>
 
     <!-- Editing Filters -->
     <string name="filter">Filter</string>
@@ -761,10 +726,6 @@
     <string name="settings_clear">Clear</string>
     <string name="settings_clear_cache_desc">This will erase all the thumbnail caches on this device, freeing up storage. Thumbnail loading will take longer on the next startup.</string>
     <string name="settings_about_and_updates">About &amp; Updates</string>
-    <string name="settings_behaviour">Behaviour</string>
-    <string name="settings_behaviour_desc">Change how the app works</string>
-    <string name="settings_navigation_exit_immediately">Exit Immediately</string>
-    <string name="settings_navigation_exit_immediately_desc">Skips going back to the main photos view when pressing the back button</string>
 
     <!-- Trash -->
     <string name="trash_bin_short">Trash</string>

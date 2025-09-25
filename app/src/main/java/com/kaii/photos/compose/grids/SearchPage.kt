@@ -1,5 +1,6 @@
 package com.kaii.photos.compose.grids
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,12 +39,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kaii.photos.LocalAppDatabase
 import com.kaii.photos.LocalMainViewModel
+import com.kaii.photos.LocalNavController
 import com.kaii.photos.R
-import com.kaii.photos.compose.ViewProperties
 import com.kaii.photos.compose.widgets.ClearableTextField
+import com.kaii.photos.compose.ViewProperties
 import com.kaii.photos.datastore.AlbumInfo
+import com.kaii.photos.datastore.BottomBarTab
+import com.kaii.photos.datastore.DefaultTabs
 import com.kaii.photos.datastore.PhotoGrid
 import com.kaii.photos.helpers.MediaItemSortMode
+import com.kaii.photos.helpers.MultiScreenViewType
 import com.kaii.photos.helpers.PhotoGridConstants
 import com.kaii.photos.mediastore.MediaStoreData
 import com.kaii.photos.mediastore.MediaType
@@ -61,7 +67,8 @@ import java.util.Locale
 
 @Composable
 fun SearchPage(
-    selectedItemsList: SnapshotStateList<MediaStoreData>
+    selectedItemsList: SnapshotStateList<MediaStoreData>,
+    currentView: MutableState<BottomBarTab>
 ) {
     val mainViewModel = LocalMainViewModel.current
     val appDatabase = LocalAppDatabase.current
@@ -82,6 +89,14 @@ fun SearchPage(
     }
 
     val gridState = rememberLazyGridState()
+    val navController = LocalNavController.current
+
+    BackHandler(
+        enabled = currentView.value == DefaultTabs.TabTypes.search && navController.currentBackStackEntry?.destination?.route == MultiScreenViewType.MainScreen.name
+    ) {
+        searchViewModel.cancelMediaFlow()
+        currentView.value = DefaultTabs.TabTypes.photos
+    }
 
     Column(
         modifier = Modifier
@@ -96,6 +111,7 @@ fun SearchPage(
         }
 
         val searchedForText = rememberSaveable { mutableStateOf("") }
+        var searchNow by rememberSaveable { mutableStateOf(false) }
 
         var hideLoadingSpinner by remember { mutableStateOf(false) }
         val showLoadingSpinner by remember {
@@ -145,11 +161,13 @@ fun SearchPage(
                     .padding(8.dp, 0.dp),
                 onConfirm = {
                     if (!showLoadingSpinner) {
+                        searchNow = true
                         scrollBackToTop()
                     }
                 },
                 onClear = {
                     searchedForText.value = ""
+                    searchNow = true
                     scrollBackToTop()
                 }
             )

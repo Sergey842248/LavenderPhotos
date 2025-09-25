@@ -434,8 +434,7 @@ fun VideoEditorTopBar(
                             if (openedTimes % 2 != 0) {
                                 showDropDown = !showDropDown
                             }
-                        },
-                        enabled = !isFromOpenWithView
+                        }
                     ) {
                         val rotation: Float by animateFloatAsState(
                             targetValue = if (showDropDown) 180f else 0f
@@ -729,7 +728,6 @@ fun ImageEditorTopBar(
     modifications: List<ImageModification>,
     lastSavedModCount: MutableIntState,
     overwrite: Boolean,
-    isFromOpenWithView: Boolean,
     setOverwrite: (Boolean) -> Unit,
     saveImage: suspend () -> Unit
 ) {
@@ -850,8 +848,7 @@ fun ImageEditorTopBar(
                             if (openedTimes % 2 != 0) {
                                 showDropDown = !showDropDown
                             }
-                        },
-                        enabled = !isFromOpenWithView
+                        }
                     ) {
                         val rotation: Float by animateFloatAsState(
                             targetValue = if (showDropDown) 180f else 0f

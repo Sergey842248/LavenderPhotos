@@ -44,7 +44,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
@@ -74,8 +73,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.kaii.lavender.snackbars.LavenderSnackbarController
-import com.kaii.lavender.snackbars.LavenderSnackbarEvents
 import com.kaii.photos.LocalAppDatabase
 import com.kaii.photos.LocalMainViewModel
 import com.kaii.photos.R
@@ -103,7 +100,6 @@ import com.kaii.photos.models.favourites_grid.FavouritesViewModel
 import com.kaii.photos.models.favourites_grid.FavouritesViewModelFactory
 import com.kaii.photos.models.multi_album.MultiAlbumViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun SinglePhotoView(
@@ -521,36 +517,13 @@ private fun BottomBar(
                 .fillMaxWidth(1f),
             contentAlignment = Alignment.Center
         ) {
-            val getDirPerm = remember { mutableStateOf(false) }
-            val coroutineScope = rememberCoroutineScope()
-            val resources = LocalResources.current
-
-            GetDirectoryPermissionAndRun(
-                absoluteDirPaths = listOf(currentItem.absolutePath.getParentFromPath()),
-                shouldRun = getDirPerm,
-                onGranted = {
-                    showEditingView()
-                },
-                onRejected = {
-                    coroutineScope.launch {
-                        LavenderSnackbarController.pushEvent(
-                            LavenderSnackbarEvents.MessageEvent(
-                                message = resources.getString(R.string.permissions_needed),
-                                icon = R.drawable.shield_lock,
-                                duration = SnackbarDuration.Short
-                            )
-                        )
-                    }
-                }
-            )
-
             HorizontalFloatingToolbar(
                 expanded = true,
                 colors = FloatingToolbarDefaults.vibrantFloatingToolbarColors(),
                 floatingActionButton = {
                     FloatingToolbarDefaults.VibrantFloatingActionButton(
                         onClick = {
-                            getDirPerm.value = true
+                            showEditingView()
                         }
                     ) {
                         Icon(
