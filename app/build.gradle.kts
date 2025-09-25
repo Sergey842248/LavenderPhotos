@@ -16,11 +16,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.kaii.photos"
+        applicationId = "com.future.photos"
         minSdk = 30
         targetSdk = 36
-        versionCode = 100
-        versionName = "v1.0.0"
+        versionCode = 120
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
